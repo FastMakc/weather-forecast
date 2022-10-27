@@ -10,21 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class WeatherForecastControllerImpl implements WeatherForecastController {
 
-    @Override
+
     @GetMapping("/forecast")
     public void getWeatherForecast(@RequestParam(value = "city") String city, @RequestParam(value = "country") String country) {
-
 
         log.info("City is: " + city + " country is: " + country);
 
     }
 
-    @Override
-    @GetMapping("/forecast")
-    public void getWeatherForecast(@RequestParam(value = "city") String city) {
-
-
-        log.info("City is: " + city);
-
-    }
 }

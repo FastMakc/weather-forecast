@@ -28,7 +28,21 @@ public class Config {
     }
 
     @Bean
+    String baseUrl() {
+
+        String key = env.getProperty("base.url");
+
+        if(key != null && !key.isEmpty()) {
+            return key;
+        }
+        else {
+            throw new InvalidParameterException("Could not load baseUrl value!!!");
+        }
+
+    }
+
+    @Bean
     ClientConfig clientConfig() {
-        return new ClientConfig(apiKey());
+        return new ClientConfig(apiKey(), baseUrl());
     }
 }

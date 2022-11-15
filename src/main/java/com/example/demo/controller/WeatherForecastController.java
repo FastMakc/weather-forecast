@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.remote.RemoteResponse;
 import com.example.demo.model.user.UserRequest;
+import reactor.core.publisher.Mono;
 
 public interface WeatherForecastController {
 
     void getWeatherForecast(String city, String country);
 
-    void getWeatherForecast(UserRequest request);
+    Mono<RemoteResponse> getWeatherForecast(UserRequest request);
 
 
 }

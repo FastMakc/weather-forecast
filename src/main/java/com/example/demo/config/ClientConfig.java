@@ -8,4 +8,5 @@ import lombok.Getter;
 public class ClientConfig {
 
     private final String apiKey;
+    private final String baseUrl;
 }

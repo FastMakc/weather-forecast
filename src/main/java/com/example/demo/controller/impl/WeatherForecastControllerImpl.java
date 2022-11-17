@@ -43,4 +43,14 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
         return weatherForecastService.getForecast(request.getLat(), request.getLon());
     }
 
-}
+    @Override
+    @PostMapping(value ="/jsonPlace", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<RemoteResponse> getWeatherPlace(@RequestBody UserRequest request) {
+        log.info("Request received: " + request);
+        log.info("API key used: " + clientConfig.getApiKey());
+
+        return weatherForecastService.getPlace(request.getCity());
+    }
+    }
+
+

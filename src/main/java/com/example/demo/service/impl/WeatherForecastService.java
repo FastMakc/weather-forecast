@@ -36,5 +36,21 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
 
     }
 
+    @Override
+    public Mono<RemoteResponse> getPlace(String city) {
+        return webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/data/2.5/weather")
+                                .queryParam("q", city)
+                                .queryParam("limit", 5)
+                                .queryParam("appid", clientConfig.getApiKey())
+                                .build()
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .retrieve()
+                .bodyToMono(RemoteResponse.class);
+    }
+
 
 }

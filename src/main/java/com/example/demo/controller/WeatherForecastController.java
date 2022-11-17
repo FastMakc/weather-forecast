@@ -9,6 +9,7 @@ public interface WeatherForecastController {
     void getWeatherForecast(String city, String country);
 
     Mono<RemoteResponse> getWeatherForecast(UserRequest request);
+    Mono<RemoteResponse> getWeatherPlace(UserRequest request);
 
 
 }

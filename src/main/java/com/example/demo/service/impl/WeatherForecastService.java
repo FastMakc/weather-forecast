@@ -1,9 +1,11 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.config.ClientConfig;
+import com.example.demo.exception.Unauthorized;
 import com.example.demo.model.remote.RemoteResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -49,6 +51,13 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
+                .onStatus(httpStatus ->
+                        httpStatus.equals(HttpStatus.UNAUTHORIZED),
+                        errorResponse -> errorResponse.bodyToMono(String.class).map(Unauthorized::new)) //Mono<String> -> map(Mono<String)
+                // (Unauthorized::new) == (lambda -> new Unautohorized(lambda))
+                .onStatus(httpStatus ->
+                        httpStatus.equals(HttpStatus.BAD_REQUEST),
+                        errorResponse -> errorResponse.bodyToMono(String.class).map(RuntimeException::new))
                 .bodyToMono(RemoteResponse.class);
     }
 

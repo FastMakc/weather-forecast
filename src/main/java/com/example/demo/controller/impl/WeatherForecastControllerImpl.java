@@ -40,6 +40,10 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
         log.info("Request received: " + request);
         log.info("API key used: " + clientConfig.getApiKey());
 
+        if(request.getLat() == 0.0) {
+            throw new IllegalArgumentException("Please check lat and lon parameters");
+        }
+
         return weatherForecastService.getForecast(request.getLat(), request.getLon());
     }
 

@@ -2,7 +2,8 @@ package com.example.demo.controller.impl;
 
 import com.example.demo.config.ClientConfig;
 import com.example.demo.controller.WeatherForecastController;
-import com.example.demo.model.remote.RemoteResponse;
+import com.example.demo.model.remote.RemoteResponsePollution;
+import com.example.demo.model.remote.RemoteResponseWeather;
 import com.example.demo.model.user.UserRequest;
 import com.example.demo.service.impl.WeatherForecastService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
 
     @Override
     @PostMapping(value = "/jsonForecast", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<RemoteResponse> getWeatherForecast(@RequestBody UserRequest request) {
+    public Mono<RemoteResponseWeather> getWeatherForecast(@RequestBody UserRequest request) {
 
         log.info("Request received: " + request);
         log.info("API key used: " + clientConfig.getApiKey());
@@ -49,11 +50,25 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
 
     @Override
     @PostMapping(value ="/jsonPlace", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<RemoteResponse> getWeatherPlace(@RequestBody UserRequest request) {
+    public Mono<RemoteResponseWeather> getWeatherPlace(@RequestBody UserRequest request) {
         log.info("Request received: " + request);
         log.info("API key used: " + clientConfig.getApiKey());
 
         return weatherForecastService.getPlace(request.getCity());
+    }
+
+    @Override
+    @PostMapping(value = "/jsonPollution", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<RemoteResponsePollution> getPollution(@RequestBody UserRequest request) {
+
+        log.info("Request received: " + request);
+        log.info("API key used: " + clientConfig.getApiKey());
+
+        if(request.getLat() == 0.0) {
+            throw new IllegalArgumentException("Please check lat and lon parameters");
+        }
+
+        return weatherForecastService.getPollution(request.getLat(), request.getLon());
     }
     }
 

@@ -2,7 +2,7 @@ package com.example.demo.model.remote;
 
 import java.util.ArrayList;
 
-public class RemoteResponse {
+public class RemoteResponseWeather {
     public Coord coord;
     public ArrayList<Weather> weather;
     public String base;

@@ -3,6 +3,7 @@ package com.example.demo.controller.impl;
 import com.example.demo.config.ClientConfig;
 import com.example.demo.controller.WeatherForecastController;
 import com.example.demo.model.remote.RemoteResponsePollution;
+import com.example.demo.model.remote.RemoteResponsePollutionNew;
 import com.example.demo.model.remote.RemoteResponseWeather;
 import com.example.demo.model.user.UserRequest;
 import com.example.demo.service.impl.WeatherForecastService;
@@ -59,7 +60,7 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
 
     @Override
     @PostMapping(value = "/jsonPollution", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<RemoteResponsePollution> getPollution(@RequestBody UserRequest request) {
+    public Mono<RemoteResponsePollutionNew> getPollution(@RequestBody UserRequest request) {
 
         log.info("Request received: " + request);
         log.info("API key used: " + clientConfig.getApiKey());

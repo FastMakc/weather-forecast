@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.remote.RemoteResponsePollution;
+import com.example.demo.model.remote.RemoteResponsePollutionNew;
 import com.example.demo.model.remote.RemoteResponseWeather;
 import com.example.demo.model.user.UserRequest;
 import reactor.core.publisher.Mono;
@@ -12,7 +13,7 @@ public interface WeatherForecastController {
     Mono<RemoteResponseWeather> getWeatherForecast(UserRequest request);
     Mono<RemoteResponseWeather> getWeatherPlace(UserRequest request);
 
-    Mono<RemoteResponsePollution> getPollution(UserRequest request);
+    Mono<RemoteResponsePollutionNew> getPollution(UserRequest request);
 
 
 }

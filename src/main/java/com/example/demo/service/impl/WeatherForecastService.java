@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.config.ClientConfig;
 import com.example.demo.exception.Unauthorized;
 import com.example.demo.model.remote.RemoteResponsePollution;
+import com.example.demo.model.remote.RemoteResponsePollutionNew;
 import com.example.demo.model.remote.RemoteResponseWeather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +65,7 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
     }
 
     @Override
-    public Mono<RemoteResponsePollution> getPollution(double lat, double lon) {
+    public Mono<RemoteResponsePollutionNew> getPollution(double lat, double lon) {
 
         return webClient.get()
                 .uri(uriBuilder ->
@@ -77,7 +78,7 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
-                .bodyToMono(RemoteResponsePollution.class);
+                .bodyToMono(RemoteResponsePollutionNew.class);
 
     }
 }

@@ -2,11 +2,17 @@ package com.example.demo.controller.impl;
 
 import com.example.demo.config.ClientConfig;
 import com.example.demo.controller.WeatherForecastController;
+import com.example.demo.exception.ErrorResponse;
+import com.example.demo.model.remote.RemoteResponsePollutio;
 import com.example.demo.model.remote.RemoteResponsePollution;
-import com.example.demo.model.remote.RemoteResponsePollutionNew;
 import com.example.demo.model.remote.RemoteResponseWeather;
 import com.example.demo.model.user.UserRequest;
 import com.example.demo.service.impl.WeatherForecastService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -59,8 +65,13 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
     }
 
     @Override
+    @Operation(summary = "returns pollution info", description = "dsjdfdfjglfjghlfgjhlfgjhlfgjhfjgh")
+    @ApiResponses(value = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = RemoteResponsePollutio.class))),
+            @ApiResponse(description = "BAD REQUEST", responseCode = "400", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @PostMapping(value = "/jsonPollution", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<RemoteResponsePollutionNew> getPollution(@RequestBody UserRequest request) {
+    public Mono<RemoteResponsePollution> getPollution(@RequestBody UserRequest request) {
 
         log.info("Request received: " + request);
         log.info("API key used: " + clientConfig.getApiKey());

@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.config.ClientConfig;
 import com.example.demo.exception.Unauthorized;
 import com.example.demo.model.remote.RemoteResponsePollution;
-import com.example.demo.model.remote.RemoteResponsePollutionNew;
+import com.example.demo.model.remote.RemoteResponsePollutio;
 import com.example.demo.model.remote.RemoteResponseWeather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,9 +65,9 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
     }
 
     @Override
-    public Mono<RemoteResponsePollutionNew> getPollution(double lat, double lon) {
+    public Mono<RemoteResponsePollution> getPollution(double lat, double lon) {
 
-        return webClient.get()
+        var response = webClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/data/2.5/air_pollution")
                                 .queryParam("lat", lat)
@@ -78,7 +78,15 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
-                .bodyToMono(RemoteResponsePollutionNew.class);
+                .bodyToMono(RemoteResponsePollutio.class);
+
+       return response.map(res -> {
+           return new RemoteResponsePollution(res.list.get(0).components.co, res.list.get(0).components.no,
+                    res.list.get(0).components.no2, res.list.get(0).components.o3,
+                    res.list.get(0).components.so2, res.list.get(0).components.pm2_5,
+                    res.list.get(0).components.pm10, res.list.get(0).components.nh3);
+
+       });
 
     }
 }

@@ -1,5 +1,8 @@
 package com.example.demo.model.remote;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class RemoteResponsePollution {
     public double co;
     public double no;

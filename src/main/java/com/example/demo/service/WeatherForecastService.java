@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.model.remote.RemoteResponsePollutio;
-import com.example.demo.model.remote.RemoteResponsePollution;
-import com.example.demo.model.remote.RemoteResponseWeather;
+import org.example.model.remote.RemoteResponsePollution;
+import org.example.model.remote.RemoteResponseWeather;
 import reactor.core.publisher.Mono;
 
 public interface WeatherForecastService {

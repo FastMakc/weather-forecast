@@ -2,11 +2,11 @@ package com.example.demo.service.impl;
 
 import com.example.demo.config.ClientConfig;
 import com.example.demo.exception.Unauthorized;
-import com.example.demo.model.remote.RemoteResponsePollution;
-import com.example.demo.model.remote.RemoteResponsePollutio;
-import com.example.demo.model.remote.RemoteResponseWeather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.model.remote.RemoteResponsePollutio;
+import org.example.model.remote.RemoteResponsePollution;
+import org.example.model.remote.RemoteResponseWeather;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

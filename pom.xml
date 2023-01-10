@@ -27,7 +27,7 @@
 
     <repositories>
         <repository>
-            <id>gitlab-maven</id>
+            <id>common-repo</id>
             <url>https://gitlab.proj3ct.io/api/v4/projects/9/packages/maven</url>
         </repository>
     </repositories>

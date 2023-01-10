@@ -49,7 +49,7 @@ sonarqube-check:
       - .sonar/cache
   script:
     - 'mvn $MAVEN_CLI_OPTS_TEST test -Pjacoco-coverage -s ci_settings.xml'
-    - 'mvn verify sonar:sonar -Dsonar.projectKey=spring_weather-forecast_AYQZN0i5yLWiWEQz8LzN -s ci_settings.xml'
+    - 'mvn verify sonar:sonar -Dsonar.projectKey=spring_weather-forecast_AYWajMrN8QwvBzkN4K4e -s ci_settings.xml'
   allow_failure: true
   only:
     - merge_requests

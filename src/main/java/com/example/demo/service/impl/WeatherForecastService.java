@@ -1,9 +1,13 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.config.ClientConfig;
-import com.example.demo.model.remote.RemoteResponse;
+import com.example.demo.exception.Unauthorized;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.model.remote.RemoteResponsePollutio;
+import org.example.model.remote.RemoteResponsePollution;
+import org.example.model.remote.RemoteResponseWeather;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,7 +23,8 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
     private final WebClient webClient;
     private final ClientConfig clientConfig;
 
-    @Override public Mono<RemoteResponse> getForecast(double lat, double lon) {
+    @Override
+    public Mono<RemoteResponseWeather> getForecast(double lat, double lon) {
 
         return webClient.get()
                 .uri(uriBuilder ->
@@ -32,9 +37,56 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
-                .bodyToMono(RemoteResponse.class);
+                .bodyToMono(RemoteResponseWeather.class);
 
     }
 
+    @Override
+    public Mono<RemoteResponseWeather> getPlace(String city) {
+        return webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/data/2.5/weather")
+                                .queryParam("q", city)
+                                .queryParam("limit", 5)
+                                .queryParam("appid", clientConfig.getApiKey())
+                                .build()
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .retrieve()
+                .onStatus(httpStatus ->
+                                httpStatus.equals(HttpStatus.UNAUTHORIZED),
+                        errorResponse -> errorResponse.bodyToMono(String.class).map(Unauthorized::new)) //Mono<String> -> map(Mono<String)
+                // (Unauthorized::new) == (lambda -> new Unautohorized(lambda))
+                .onStatus(httpStatus ->
+                                httpStatus.equals(HttpStatus.BAD_REQUEST),
+                        errorResponse -> errorResponse.bodyToMono(String.class).map(RuntimeException::new))
+                .bodyToMono(RemoteResponseWeather.class);
+    }
 
+    @Override
+    public Mono<RemoteResponsePollution> getPollution(double lat, double lon) {
+
+        var response = webClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/data/2.5/air_pollution")
+                                .queryParam("lat", lat)
+                                .queryParam("lon", lon)
+                                .queryParam("appid", clientConfig.getApiKey())
+                                .build()
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .retrieve()
+                .bodyToMono(RemoteResponsePollutio.class);
+
+       return response.map(res -> {
+           return new RemoteResponsePollution(res.list.get(0).components.co, res.list.get(0).components.no,
+                    res.list.get(0).components.no2, res.list.get(0).components.o3,
+                    res.list.get(0).components.so2, res.list.get(0).components.pm2_5,
+                    res.list.get(0).components.pm10, res.list.get(0).components.nh3);
+
+       });
+
+    }
 }

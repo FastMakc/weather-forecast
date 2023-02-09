@@ -15,7 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				@Server(url = "test.env", description = "test environment"),
 				@Server(url ="http://localhost:8081", description = "localhost"),
 				@Server(url = "prod.env", description = "production environment"),
-
 		}
 )
 public class DemoApplication {

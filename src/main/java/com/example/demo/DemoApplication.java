@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				@Server(url = "prod.env", description = "production environment"),
 		}
 )
+
 public class DemoApplication {
 
 	public static void main(String[] args) {

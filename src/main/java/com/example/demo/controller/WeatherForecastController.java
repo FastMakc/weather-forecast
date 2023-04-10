@@ -14,6 +14,4 @@ public interface WeatherForecastController {
     Mono<RemoteResponseWeather> getWeatherPlace(UserRequest request);
 
     Mono<RemoteResponsePollution> getPollution(UserRequest request);
-
-
 }

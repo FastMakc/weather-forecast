@@ -27,7 +27,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class WeatherForecastControllerImpl implements WeatherForecastController {
 
-
     @Autowired
     ClientConfig clientConfig;
     @Autowired

@@ -24,7 +24,6 @@ public class Config {
         else {
             throw new InvalidParameterException("Could not load API key!!!");
         }
-
     }
 
     @Bean

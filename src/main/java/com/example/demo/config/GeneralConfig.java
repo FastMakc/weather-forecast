@@ -34,5 +34,4 @@ public class GeneralConfig {
                 .clientConnector(getConnector())
                 .build();
     }
-
 }

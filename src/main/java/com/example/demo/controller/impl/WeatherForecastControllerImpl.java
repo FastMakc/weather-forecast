@@ -50,7 +50,7 @@ public class WeatherForecastControllerImpl implements WeatherForecastController 
         if(request.getLat() == 0.0) {
             throw new IllegalArgumentException("Please check lat and lon parameters");
         }
-
+        
         return weatherForecastService.getForecast(request.getLat(), request.getLon());
     }
 

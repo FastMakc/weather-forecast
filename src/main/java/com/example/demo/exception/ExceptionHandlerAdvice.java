@@ -30,6 +30,4 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity(new ErrorResponse(errorMessage), HttpStatus.UNAUTHORIZED);
     }
 
-
-
 }

@@ -6,3 +6,4 @@ public class Unauthorized extends RuntimeException{
         super(msg);
     }
 }
+

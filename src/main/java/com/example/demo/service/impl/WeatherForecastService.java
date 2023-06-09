@@ -40,6 +40,7 @@ public class WeatherForecastService implements com.example.demo.service.WeatherF
                 .bodyToMono(RemoteResponseWeather.class);
 
     }
+    
 
     @Override
     public Mono<RemoteResponseWeather> getPlace(String city) {

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import org.example.model.remote.RemoteResponsePollution;
 import org.example.model.remote.RemoteResponseWeather;
 import org.example.model.user.UserRequest;
